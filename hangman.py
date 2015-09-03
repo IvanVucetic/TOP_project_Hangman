@@ -13,8 +13,6 @@ while (5 >= len(word)) or (len(word) >= 12):
     # need to remove trailing space so it doesn't affect word's length
     word = str.strip(word)
 
-print word, len(word)
-
 
 # preparing the game
 
