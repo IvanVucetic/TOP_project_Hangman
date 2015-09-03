@@ -18,7 +18,14 @@ print word, len(word)
 
 # preparing the game
 
-correct_letters = "_" * len(word)   # to display correctly guessed letters
+# display correctly guessed letters
+letters_position = []
+for i in range(len(word)):
+    letters_position.append("_")
+
+# word into a list for indexing purposes
+word_list = list(word)
+
 empty_slots = len(word)  # unguessed letters; game ends when == 0 (all guessed)
 incorrectly_guessed = []  # display incorrect guesses to avoid repeating them
 correctly_guessed = []  # take note of previous guesses
@@ -26,7 +33,7 @@ attempts_left = 6   # TODO: turn into gallows
 
 while True:
     
-    print correct_letters
+    print "".join(letters_position)  # print string, not list
     print "Incorrect attempts: ", incorrectly_guessed
     print "Attempts left: ", attempts_left
 
@@ -44,11 +51,19 @@ while True:
         if new_attempt in word:
             print "Bravo!"
             correctly_guessed.append(new_attempt)
-            # change correct_letters to show position of guessed letter
-            # empty_slots = empty_slots - num of letter occurences in a word
+            
+            # change letters_position to show position of guessed letter
+            for i in range(word.count(new_attempt)):
+                index = word_list.index(new_attempt)
+                letters_position[index] = new_attempt
+                # ne mozemo da pop-ujemo iz word_list jer to menja indexe
+                word_list[index] = "_"
+
+            empty_slots = empty_slots - word.count(new_attempt)
             if empty_slots == 0: 
                 print "---"
                 print "You have WON!!!"
+                print "---"
                 break
         
         else:
@@ -58,4 +73,5 @@ while True:
             if attempts_left == 0: 
                 print "---"
                 print "You have lost... :("
+                print "---"
                 break
